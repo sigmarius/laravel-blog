@@ -8,7 +8,7 @@
         @vite('resources/js/app.js')
     </head>
     <body>
-    <h1 class="text-3xl bg-blue-100">
+    <h1 class="text-3xl bg-green-100">
         {{ env('APP_NAME') }}
     </h1>
     </body>
