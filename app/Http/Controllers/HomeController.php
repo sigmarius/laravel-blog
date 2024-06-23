@@ -13,22 +13,9 @@ class HomeController extends Controller
 {
     public function __invoke(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        $article = Article::find(1);
+        $user = User::find(1);
 
-        $article->categories()->sync([
-            1 => [
-                'is_published' => true,
-                'priority' => 100
-            ],
-            2 => [
-                'is_published' => false,
-                'priority' => 90
-            ]
-        ]);
-
-        foreach ($article->categories as $category) {
-            dump($category->pivot->is_published);
-        }
+        dump($user->tag);
 
         $users = User::query()
             ->select(['id', 'name', 'email'])
