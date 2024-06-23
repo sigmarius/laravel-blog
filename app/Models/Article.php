@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Article extends Model
 {
@@ -29,6 +32,20 @@ class Article extends Model
         return $this->hasMany(Comment::class);
     }
 
+    // если используются полиморфные отношения, метод заменяет HasMany
+    public function polyComments(): MorphMany
+    {
+        // (модель с полиморфным отношением, префикс указанный в миграции)
+        return $this->morphMany(PolyComment::class, 'commentable');
+    }
+
+    // если используются полиморфные отношения, метод заменяет HasOne
+    public function latestPolyComment(): MorphOne
+    {
+        // (модель с полиморфным отношением, префикс указанный в миграции)
+        return $this->morphOne(PolyComment::class, 'commentable')->latestOfMany();
+    }
+
     public function tag(): HasOne
     {
         return $this->hasOne(Tag::class);
@@ -37,6 +54,13 @@ class Article extends Model
     public function tags(): HasMany
     {
         return $this->hasMany(Tag::class);
+    }
+
+    // если используются полиморфные отношения, метод заменяет BelongsToMany
+    public function polyTags(): MorphToMany
+    {
+        // (модель с полиморфным отношением, префикс указанный в миграции)
+        return $this->morphToMany(PolyTag::class, 'taggable');
     }
 
     public function categories(): BelongsToMany
