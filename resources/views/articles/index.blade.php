@@ -6,7 +6,7 @@
     @include('shared.header', ['title' => 'Статьи'])
 
     <div class="container mx-auto">
-        <a href="#" class="text-indigo-600 hover:text-indigo-900 my-5 block">
+        <a href="{{ route('articles.create') }}" class="text-indigo-600 hover:text-indigo-900 my-5 block">
             Добавить статью
         </a>
 
@@ -65,11 +65,16 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex justify-end items-center space-x-3">
                                     <a
                                         class="text-indigo-600 hover:text-indigo-900"
-                                        href="#"
+                                        href="{{ route('articles.edit', $article) }}"
                                     >Редактировать</a>
 
-                                    <a class="text-red-600 hover:text-red-900 cursor-pointer"
-                                    >Удалить</a>
+                                    <form method="POST" action="{{ route('articles.destroy', $article) }}">
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button type="submit" class="text-red-600 hover:text-red-900 cursor-pointer"
+                                        >Удалить</button>
+                                    </form>
                                 </td>
                             </tr>
                             @endforeach

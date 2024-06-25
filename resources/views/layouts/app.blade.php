@@ -8,6 +8,12 @@
         @vite('resources/js/app.js')
     </head>
     <body>
+        @if(session('message'))
+            <div class="p-5 bg-green-300 text-green-700 text-center">
+                {{ session('message')  }}
+            </div>
+        @endif
+
         @yield('content')
     </body>
 </html>

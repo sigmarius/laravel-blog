@@ -6,4 +6,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class);
 
-Route::resource('articles', ArticleController::class);
+Route::resource('articles', ArticleController::class)
+    ->except(['show']);
