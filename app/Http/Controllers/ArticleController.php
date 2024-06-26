@@ -20,7 +20,7 @@ class ArticleController extends Controller
     public function index(): View|\Illuminate\Foundation\Application|Factory|Application
     {
         $articles = Article::query()
-            ->select(['id', 'title', 'created_at', 'user_id'])
+            ->select(['id', 'title', 'thumbnail', 'created_at', 'user_id'])
             ->with(['user:id,name'])
             ->withCount('comments')
             ->latest()
@@ -62,7 +62,14 @@ class ArticleController extends Controller
      */
     public function update(UpdateArticleRequest $request, Article $article): RedirectResponse
     {
-        $article->update($request->validated());
+        $data = $request->validated();
+
+        // если в реквесте есть файл
+        if ($request->hasFile('thumbnail')) {
+            $data['thumbnail'] = $request->file('thumbnail')->store('images');
+        }
+
+        $article->update($data);
 
         return redirect()->route('articles.index')
             ->with('message', ' Статья успешно отредактирована');

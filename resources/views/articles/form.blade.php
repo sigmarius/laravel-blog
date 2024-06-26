@@ -12,7 +12,9 @@
 
         <form
             method="POST"
-            action="{{ $article->exists ? route('articles.update', $article) : route('articles.store') }}">
+            action="{{ $article->exists ? route('articles.update', $article) : route('articles.store') }}"
+            enctype="multipart/form-data"
+        >
             @csrf
             @method( $article->exists ? 'PUT' : 'POST')
 
@@ -43,6 +45,17 @@
                                 class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 @error('text') border-red-500 @enderror rounded-md">
 
                             @error('text')
+                                <div class="text-red-500 mt-2">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- Загрузка файла -->
+                        <div class="col-span-6">
+                            <label class="block text-sm font-medium text-gray-700">Обложка</label>
+
+                            <input type="file" name="thumbnail">
+
+                            @error('thumbnail')
                                 <div class="text-red-500 mt-2">{{ $message }}</div>
                             @enderror
                         </div>

@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\File;
 
 class UpdateArticleRequest extends FormRequest
 {
@@ -26,6 +27,7 @@ class UpdateArticleRequest extends FormRequest
             'user_id' => ['required', Rule::exists('users', 'id')],
             'title' => ['required', 'string', 'min:5'],
             'text' => ['required', 'string', 'min:10'],
+            'thumbnail' => [File::image()]
         ];
     }
 }

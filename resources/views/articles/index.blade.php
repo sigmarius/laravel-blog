@@ -28,6 +28,9 @@
                                     Автор
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Обложка
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Кол-во комментариев
                                 </th>
                                 <th scope="col" class="relative px-6 py-3">
@@ -54,6 +57,12 @@
                                     <div class="text-sm font-medium text-gray-900">
                                         {{ $article->user->name }}
                                     </div>
+                                </td>
+
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    @if($article->thumbnail)
+                                        <img src="{{ $article->thumbnailUrl }}" alt="{{ $article->title }}">
+                                    @endif
                                 </td>
 
                                 <td class="px-6 py-4 whitespace-nowrap">
