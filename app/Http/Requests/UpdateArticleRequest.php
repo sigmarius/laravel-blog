@@ -13,7 +13,8 @@ class UpdateArticleRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        // если пользователь авторизован, то можно создавать статьи
+        return auth()->check();
     }
 
     /**

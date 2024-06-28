@@ -14,6 +14,18 @@
             </div>
         @endif
 
+        @auth
+            {{ auth()->user()->email }}
+
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit">Выйти</button>
+            </form>
+        @elseguest
+            <a href="{{ route('login') }}">Войти</a>
+        @endauth
+
         @yield('content')
     </body>
 </html>
