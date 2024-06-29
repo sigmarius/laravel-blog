@@ -1,73 +1,52 @@
-@extends('layouts.app')
+<x-guest-layout>
+    <form method="POST" action="{{ route('register') }}">
+        @csrf
 
-@section('title', 'Регистрация')
+        <!-- Name -->
+        <div>
+            <x-input-label for="name" :value="__('Name')" />
+            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+        </div>
 
-@section('content')
-    @include('shared.header', ['title' => 'Регистрация'])
+        <!-- Email Address -->
+        <div class="mt-4">
+            <x-input-label for="email" :value="__('Email')" />
+            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
+            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        </div>
 
-    <div class="container mx-auto">
-        <form
-            method="POST"
-            action="{{  route('register') }}"
-            enctype="multipart/form-data"
-        >
-            @csrf
+        <!-- Password -->
+        <div class="mt-4">
+            <x-input-label for="password" :value="__('Password')" />
 
-            <div class="shadow overflow-hidden sm:rounded-md">
-                <div class="px-4 py-5 bg-white sm:p-6">
-                    <div class="grid grid-cols-6 gap-6">
+            <x-text-input id="password" class="block mt-1 w-full"
+                            type="password"
+                            name="password"
+                            required autocomplete="new-password" />
 
-                        <div class="col-span-6">
-                            <label class="block text-sm font-medium text-gray-700">Email</label>
-                            <input
-                                type="email"
-                                name="email"
-                                value="{{ old('email') }}"
-                                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 @error('email') border-red-500 @enderror rounded-md">
+            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        </div>
 
-                            @error('email')
-                                <div class="text-red-500 mt-2">{{ $message }}</div>
-                            @enderror
-                        </div>
+        <!-- Confirm Password -->
+        <div class="mt-4">
+            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
 
-                        <div class="col-span-6">
-                            <label class="block text-sm font-medium text-gray-700">Пароль</label>
+            <x-text-input id="password_confirmation" class="block mt-1 w-full"
+                            type="password"
+                            name="password_confirmation" required autocomplete="new-password" />
 
-                            <input
-                                type="password"
-                                name="password"
-                                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 @error('password') border-red-500 @enderror rounded-md">
+            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        </div>
 
-                            @error('password')
-                                <div class="text-red-500 mt-2">{{ $message }}</div>
-                            @enderror
-                        </div>
+        <div class="flex items-center justify-end mt-4">
+            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
+                {{ __('Already registered?') }}
+            </a>
 
-                        <div class="col-span-6">
-                            <label class="block text-sm font-medium text-gray-700">Подтверждение пароля</label>
-
-                            <input
-                                type="password"
-                                name="password_confirmation"
-                                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 @error('password_confirmation') border-red-500 @enderror rounded-md">
-
-                            @error('password_confirmation')
-                            <div class="text-red-500 mt-2">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                </div>
-
-                <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                    <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                        Регистрация
-                    </button>
-                </div>
-            </div>
-        </form>
-
-        <a href="{{ route('login') }}" class="text-indigo-600 hover:text-indigo-900 my-5 block">
-            Войти на сайт
-        </a>
-    </div>
-@endsection
+            <x-primary-button class="ms-4">
+                {{ __('Register') }}
+            </x-primary-button>
+        </div>
+    </form>
+</x-guest-layout>
